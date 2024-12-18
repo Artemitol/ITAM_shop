@@ -1,0 +1,33 @@
+#root {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: var(--color-text-main);
+    @include font-main;
+    font-weight: bold;
+}
+
+body {
+    background-color: var(--color-background);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    // font-weight: ;
+}
+
+// -- FONT SIZE --
+// h1 {
+//     font-size: var(--h1-font-size);
+// }
+
+// p {
+//     font-size: var(--p-font-size)
+// }
