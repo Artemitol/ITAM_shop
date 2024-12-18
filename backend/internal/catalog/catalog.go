@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strconv"
 
-	//	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"gorm.io/gorm"
@@ -70,7 +70,12 @@ func GetItem(c *gin.Context) {
 	}
 
 	var product entity.Product
-	UserID := 26
+	session := sessions.Default(c)
+	UserID := session.Get("id")
+	if UserID == nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
+		return
+	}
 	query := "SELECT EXISTS(SELECT 1 FROM  favourites WHERE  product_id = ? AND user_id = ?)"
 	var exists int
 	_ = db.Raw(query, id, UserID).Scan(&exists)
@@ -131,12 +136,12 @@ func GetItem(c *gin.Context) {
 }
 
 func GetFavoriteItems(c *gin.Context) {
-	//session := sessions.Default(c)
-	userID := 26 //session.Get("id")
-	//if userID == nil {
-	//	c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
-	//	return
-	//}
+	session := sessions.Default(c)
+	userID := session.Get("id")
+	if userID == nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
+		return
+	}
 
 	var favorites_ids []int
 	query := "SELECT product_id FROM favourites WHERE user_id = ?"
@@ -160,12 +165,12 @@ func GetFavoriteItems(c *gin.Context) {
 }
 
 func AddToFavorites(c *gin.Context) {
-	//session := sessions.Default(c)
-	userID := 26 //session.Get("id")
-	//if userID == nil {
-	//	c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
-	//	return
-	//}
+	session := sessions.Default(c)
+	userID := session.Get("id")
+	if userID == nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
+		return
+	}
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"Ошибка": "Недействительный ID продукта"})
@@ -207,12 +212,12 @@ func AddToFavorites(c *gin.Context) {
 }
 
 func RemoveFromFavorites(c *gin.Context) {
-	//session := sessions.Default(c)
-	userID := 26 //session.Get("id")
-	//if userID == nil {
-	//	c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
-	//	return
-	//}
+	session := sessions.Default(c)
+	userID := session.Get("id")
+	if userID == nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
+		return
+	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -264,12 +269,12 @@ func ProductFilter(c *gin.Context) {
 }
 
 func GetCart(c *gin.Context) {
-	//session := sessions.Default(c)
-	userID := 26 //session.Get("id")
-	//if userID == nil {
-	//	c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
-	//	return
-	//}
+	session := sessions.Default(c)
+	userID := session.Get("id")
+	if userID == nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
+		return
+	}
 
 	var cart_ids []int
 	query := "SELECT product_id FROM user_cart WHERE user_id = ?"
@@ -293,12 +298,12 @@ func GetCart(c *gin.Context) {
 }
 
 func AddToCart(c *gin.Context) {
-	//sessions := sessions.Default(c)
-	userID := 26 //sessions.Get("id")
-	//if id == nil {
-	//	c.JSON(http.StatusBadRequest, gin.H{"Ошибка": "Недействительный ID пользователя"})
-	//	return
-	//}
+	session := sessions.Default(c)
+	userID := session.Get("id")
+	if userID == nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
+		return
+	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -342,12 +347,12 @@ func AddToCart(c *gin.Context) {
 }
 
 func RemoveFromCart(c *gin.Context) {
-	//session := sessions.Default(c)
-	userID := 26 //session.Get("id")
-	//if userID == nil {
-	//	c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
-	//	return
-	//}
+	session := sessions.Default(c)
+	userID := session.Get("id")
+	if userID == nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
+		return
+	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
