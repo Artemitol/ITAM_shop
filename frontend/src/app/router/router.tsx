@@ -6,6 +6,7 @@ import { createBrowserRouter } from "react-router-dom"
 import { ProductPage } from "@pages/product-page"
 import { WishlistPage } from "@pages/wishlist-page"
 import { CartPage } from "@pages/cart-page"
+import { AdminPanel } from "@pages/admin-panel"
 
 export const router = createBrowserRouter([
     {
@@ -39,6 +40,18 @@ export const router = createBrowserRouter([
                     <Spinner
                         style={{ marginTop: "7rem" }}
                         label='somthing went wrong on catalog page...'
+                        color='danger'
+                        labelColor='danger'
+                    />
+                ),
+            },
+            {
+                path: "admin",
+                element: <AdminPanel />,
+                errorElement: (
+                    <Spinner
+                        style={{ marginTop: "7rem" }}
+                        label='Can`t load admin panel page...'
                         color='danger'
                         labelColor='danger'
                     />
