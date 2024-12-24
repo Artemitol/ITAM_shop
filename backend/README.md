@@ -10,9 +10,28 @@ ITAM_Shop - это веб-приложение, разработанное с и
 ### Клонирование репозитория
 
 ```bash
-git clone https://github.com/sj-shoff/ITAM_Shop.git
+git clone https://github.com/Artemitol/ITAM_shop
 ```
 ### Запуск проекта
+
+## Быстрый запуск из директории ITAM_Shop
+```bash
+    ./docker/build.sh
+    ./docker/compose_up.sh
+```
+## Отключение из директории ITAM_Shop
+```bash
+    ./docker/compose_down.sh
+```
+## Дополнительная информация по запуску
+Если отказано в доступе
+```bash
+    chmod -R +x .
+```
+Посмотреть логи приложения
+```bash
+    docker logs shop-itam
+```
 
 - Переключитесь на нужную ветку(подразумевается develop)
 ```bash
@@ -76,7 +95,6 @@ go run .
         - 6. После получения ответа 200 пароль успешно изменен
 
 Личный кабинет
-
     POST /logout - выход из личного кабинета
     POST /updateavatar - Обновить аватар пользователя Request -> entity.Images
     POST /updatename - Обновить имя пользователя
@@ -92,8 +110,6 @@ go run .
         - Добавлена функция TakeOffMoney(login, price) -> bool Возвращает прошла ли оплата или нет
 
 Каталог
-
-
 	GET /catalog - Получение списка товаров из каталога
 	POST /filter - Применение фильтра к товарам в каталоге
 
@@ -139,28 +155,18 @@ go run .
 ```bash
 type User struct {
 	gorm.Model
-	ID          uint    `json:"user_id" gorm:"column:user_id"`
-	Balance     float64 `json:"user_balance" gorm:"column:user_balance"`
-	UserName    string  `json:"user_name" gorm:"column:user_name"`
-	UserSurname string  `json:"user_surname" gorm:"column:user_surname"`
-	Login       string  `json:"user_login" gorm:"column:user_login"`
-	Email       string  `json:"user_email" gorm:"column:user_email"`
-	Password    string  `json:"user_password" gorm:"column:user_password"`
-	Admin       bool    `json:"user_admin_rights" gorm:"column:user_admin_rights"`
-	Avatar      []byte  `json:"user_avatar" gorm:"column:user_avatar"`
+	ID          uint    `json:"user_id"`
+	Balance     float64 `json:"user_balance"`
+	UserName    string  `json:"user_name"
+	UserSurname string  `json:"user_surname"`
+	Login       string  `json:"user_login"`
+	Email       string  `json:"user_email"`
+	Password    string  `json:"user_password"`
+	Admin       bool    `json:"user_admin_rights"`
+	Avatar      []byte  `json:"user_avatar"`
 	//
 }
 ```
-
-# Images
-```bash
-type Images struct {
-	gorm.Model
-	ImageData []byte `json:"image_data"`
-	//
-}
-```
-
 # FilterParams
 ```bash
 type FilterParams struct {
@@ -169,31 +175,28 @@ type FilterParams struct {
 	MaxPrice float64 `json:"maxPrice"`
 }
 ```
-
 # Product
 ```bash
 type Product struct {
-  //Features       []Feature `json:"features"`
-  ProductID      uint    `json:"product_id" gorm:"column:product_id"`
-  Price          float64 `json:"product_price" gorm:"column:product_price"`
-  Name           string  `json:"product_name" gorm:"column:product_name"`
-  Image          []byte    `json:"product_image" gorm:"column:product_image"`
-  Description    string  `json:"product_description" gorm:"column:product_description"`
-  Category       string  `json:"product_category" gorm:"column:product_category"`
-//	Specifications string  `json:"product_specifications" gorm:"column:product_specifications"`
-  Quantity       int     `json:"product_quantity" gorm:"column:product_quantity"`
-  StockQuantity  int     `json:"product_stock_quantity" gorm:"column:product_stock_quantity"`
-  Is_in_cart	 	int			 `json:"is_in_cart" gorm:"column:is_in_cart"`
-  Is_in_fav			int			 		`json:"is_in_fav" gorm:"column:is_in_fav"`
+	ProductID     uint    `json:"product_id"`
+	Price         float64 `json:"product_price"`
+	Name          string  `json:"product_name"`
+	Image         []byte  `json:"product_image"`
+	Description   string  `json:"product_description"`
+	Category      string  `json:"product_category"`
+	Quantity      int     `json:"product_quantity"`
+	StockQuantity int     `json:"product_stock_quantity"`
+	Is_in_cart    int     `json:"is_in_cart"`
+	Is_in_fav     int     `json:"is_in_fav"`
+	//
 }
 ```
-
 # Feature
 ```bash
 type Feature struct {
-	Name  string `json:"name_of_feature" gorm:"column:name_of_feature"`
-	Value string `json:"value_for_feature" gorm:"column:value_for_feature"`
-	Unit_of_measurement string `json:"Unit_of_measurement" gorm:"column:Unit_of_measurement"`
+	Name                string `json:"name_of_feature"`
+	Value               string `json:"value_for_feature"`
+	Unit_of_measurement string `json:"Unit_of_measurement"`
 }
 ```
 # CartItem
@@ -204,14 +207,12 @@ type CartItem struct {
 	Product        Product `json:"product"`
 }
 ```
-
 # Cart
 ```bash
 type Cart struct {
 	Items []CartItem `json:"items"`
 }
 ```
-
 # Favourite
 ```bash
 type Favorite struct {
