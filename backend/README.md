@@ -138,18 +138,11 @@ go run .
     POST /editproductcategory/:id - редактирование категории продукта(без логики администратора) Request -> `json:"product_category"`
     POST /editproductquantity/:id - редактирование колличества продукта(без логики администратора) Request -> int `json:"product_quantity"`
     POST /editproductstockquantity/:id - редактирование продукта(без логики администратора) Request -> int `json:"product_stock_quantity"`
-
-    POST /add_features_to_item/:id_item/:id_features Передается id_item к которому добавляем фичу и id_featurs , id фичи которую хотим добавить. Вместе с этим передаем json строчку с ключем message. В которой пишем значение для поля фичи
-
     POST /deleteproduct/:id - удаление продукта(без логики администратора)
-    POST /add_features_to_item/:id_item/:id_features Добавление определенной фичи (по номеру) к товару. Передать Json с полем message с параметром value
-	POST /updateimageforproduct/:id Добавление/обновление фото продукта Request -> entity.Images
 
-    NOT OK
+    POST /add_features_to_item/:id_item/:id_features - к предмету по id_item добавить фичу(параметр) c id = id_features(их все можно в бд посмотреть, надо обсудить как на фронте их добавлять пользователю). У каждого параметра есть значение которое нужно передать Request -> 'json:"message"'
 
-    GET /analytics - Получение аналитики.
-    GET /admin_panel - Доступ к административной панели.
-    POST /giveadminrights - Выдача прав доступа админа по логину Request -> {`json:"user_login"`}
+	POST /updateimageforproduct/:id Добавление/обновление фото продукта Request -> `json:"user_avatar"` формат jpeg 60Кб
 
 
 ### Используемые сущности
