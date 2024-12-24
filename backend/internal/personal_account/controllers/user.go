@@ -20,6 +20,28 @@ func InitPersonalAccount(db1 *gorm.DB, s *gin.Engine) {
 	s.POST("/updatesurname", UpdateSurname())
 	s.POST("/updatepassword", UpdatePassword)
 	s.POST("/logout", Logout)
+	s.POST("/page/personal", PersonalPage())
+}
+
+func PersonalPage() gin.HandlerFunc{
+	return func(ctx *gin.Context) {
+		sessions:=sessions.Default(ctx);
+		id:=sessions.Get("id")
+
+		if id==nil{
+			ctx.JSON(204, gin.H{"message":"You ned to login to see this"});
+			return;
+		}
+
+		var user entity.User
+		query := "SELECT * FROM users WHERE user_id = ?"
+		if err:=db.Raw(query, id).Scan(&user).Error; err!=nil{
+			ctx.JSON(400, gin.H{"message":"Failed get user"});
+			return;
+		}
+
+		ctx.JSON(200, user);
+	}
 }
 
 func UpdatePassword(c *gin.Context) {
@@ -32,11 +54,15 @@ func UpdatePassword(c *gin.Context) {
 	}
 
 	sessions := sessions.Default(c)
-	login := sessions.Get("login")
+	id := sessions.Get("id")
 
-	if err := db.Model(&entity.User{}).Where("user_login = ?", login).Update("user_password", request.NewPassword).Error; err != nil {
-		c.JSON(400, gin.H{"message": "Error"})
-		//log.Print("Database error: ", err)
+	if id == nil {
+		c.JSON(400, gin.H{"Message": "Not logged"})
+		return
+	}
+
+	if err := db.Exec("UPDATE users SET user_password = ? WHERE user_id = ?", request.NewPassword, id).Error; err != nil {
+		c.JSON(400, gin.H{"message": "Error updating password"})
 		return
 	}
 
@@ -54,10 +80,15 @@ func UpdateName() gin.HandlerFunc {
 		}
 
 		sessions := sessions.Default(ctx)
-		login := sessions.Get("login")
+		id := sessions.Get("id")
 
-		if err := db.Model(&entity.User{}).Where("user_login = ?", login).Update("user_name", request.Name).Error; err != nil {
-			ctx.JSON(400, gin.H{"message": "Error"})
+		if id == nil {
+			ctx.JSON(400, gin.H{"Message": "Not logged"})
+			return
+		}
+
+		if err := db.Exec("UPDATE users SET user_name = ? WHERE user_id = ?", request.Name, id).Error; err != nil {
+			ctx.JSON(400, gin.H{"message": "Error updating name"})
 			return
 		}
 
@@ -68,7 +99,7 @@ func UpdateName() gin.HandlerFunc {
 func UpdateSurname() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var request struct {
-			Name string `json:"user_surname"`
+			Surname string `json:"user_surname"`
 		}
 		if err := ctx.ShouldBindJSON(&request); err != nil {
 			ctx.JSON(400, gin.H{"message": "Invalid request"})
@@ -76,10 +107,15 @@ func UpdateSurname() gin.HandlerFunc {
 		}
 
 		sessions := sessions.Default(ctx)
-		login := sessions.Get("login")
+		id := sessions.Get("id")
 
-		if err := db.Model(&entity.User{}).Where("user_login = ?", login).Update("user_surname", request.Name).Error; err != nil {
-			ctx.JSON(400, gin.H{"message": "Error"})
+		if id == nil {
+			ctx.JSON(400, gin.H{"Message": "Not logged"})
+			return
+		}
+
+		if err := db.Exec("UPDATE users SET user_surname = ? WHERE user_id = ?", request.Surname, id).Error; err != nil {
+			ctx.JSON(400, gin.H{"message": "Error updating surname"})
 			return
 		}
 
@@ -89,24 +125,24 @@ func UpdateSurname() gin.HandlerFunc {
 
 func UpdateUserAvatar() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var newImage entity.Images
+		var newImage struct {
+			ImageData []byte `json:"user_avatar"`
+		}
 		if err := ctx.ShouldBindJSON(&newImage); err != nil {
 			ctx.JSON(400, gin.H{"message": "Bad request"})
 			return
 		}
 
 		sessions := sessions.Default(ctx)
-		login := sessions.Get("login").(string)
+		id := sessions.Get("id")
 
-		result := db.Create(&newImage)
-
-		if result.Error != nil {
-			ctx.JSON(400, gin.H{"message": "Ошибка"})
+		if id == nil {
+			ctx.JSON(400, gin.H{"Message": "Not logged"})
 			return
 		}
 
-		if err := db.Model(&entity.User{}).Where("user_login = ?", login).Update("user_avatar", newImage.ImageData).Error; err != nil {
-			ctx.JSON(400, gin.H{"message": "Error"})
+		if err := db.Exec("UPDATE users SET user_avatar = ? WHERE user_id = ?", newImage.ImageData, id).Error; err != nil {
+			ctx.JSON(400, gin.H{"message": "Error updating avatar"})
 			return
 		}
 

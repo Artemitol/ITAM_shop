@@ -16,7 +16,7 @@ type User struct {
 	Email       string  `json:"user_email" gorm:"column:user_email"`
 	Password    string  `json:"user_password" gorm:"column:user_password"`
 	Admin       bool    `json:"user_admin_rights" gorm:"column:user_admin_rights"`
-	Avatar      uint    `json:"user_avatar" gorm:"column:user_avatar"`
+	Avatar      []byte  `json:"user_avatar" gorm:"column:user_avatar"`
 	//
 }
 
@@ -47,8 +47,8 @@ type Product struct {
 
 type Images struct {
 	gorm.Model
-	ImageID   uint   `json:"image_id" gorm:"column:image_id"`
-	ImageData []byte `json:"image_data" gorm:"column:image_data"`
+	ImageID   uint   `json:"image_id" gorm:"column:id"`
+	ImageData []byte `json:"image_data" gorm:"column:data"`
 	//
 }
 

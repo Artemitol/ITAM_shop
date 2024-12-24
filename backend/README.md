@@ -26,7 +26,7 @@ git clone https://github.com/Artemitol/ITAM_shop
 ## Дополнительная информация по запуску
 Если отказано в доступе
 ```bash
-    chmod -R +x .
+    chmod -R +x ./docker
 ```
 Посмотреть логи приложения
 ```bash
@@ -95,11 +95,13 @@ go run .
         - 6. После получения ответа 200 пароль успешно изменен
 
 Личный кабинет
-    POST /logout - выход из личного кабинета
-    POST /updateavatar - Обновить аватар пользователя Request -> entity.Images
-    POST /updatename - Обновить имя пользователя
-    POST /updatesurname - Обновить фамилию пользователя
-    POST /updatepassword - Обновить пароль пользователя
+
+	POSt /page/personal - получение всей информации о пользователе для страницы личного кабинета Response -> entity.User
+    POST /logout - выход из личного кабинета(удаляет информацию о сессии. После вызова сделать редирект к каталогу)
+    POST /updateavatar - Обновить аватар пользователя Request -> `json:"user_avatar"` формат jpeg 60Кб id пользователя определяется автоматически
+    POST /updatename - Обновить имя пользователя Request -> `json:"user_name"` 
+    POST /updatesurname - Обновить фамилию пользователя Request -> `json:"user_surname"` 
+    POST /updatepassword - Обновить пароль пользователя Request -> `json:"user_password"` 
 
 
 Транзакции
@@ -110,6 +112,7 @@ go run .
         - Добавлена функция TakeOffMoney(login, price) -> bool Возвращает прошла ли оплата или нет
 
 Каталог
+
 	GET /catalog - Получение списка товаров из каталога
 	POST /filter - Применение фильтра к товарам в каталоге
 

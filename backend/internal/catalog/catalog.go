@@ -45,7 +45,12 @@ func GetCatalogItems(c *gin.Context) {
 	}
 	for i := 0; i < len(products); i++ {
 		product := products[i]
-		UserID := 26
+		session := sessions.Default(c)
+		UserID := session.Get("id")
+		if UserID == nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
+			return
+		}
 		query := "SELECT EXISTS(SELECT 1 FROM  favourites WHERE  product_id = ? AND user_id = ?)"
 		var exists int
 		_ = db.Raw(query, product.ProductID, UserID).Scan(&exists)

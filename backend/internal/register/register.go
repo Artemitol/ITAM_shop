@@ -25,6 +25,16 @@ func InitRegister(db1 *gorm.DB, s *gin.Engine) {
 	s.POST("/recoverpassword", RecoverUserPassword())
 	s.POST("/newpassword", Newpassword())
 	s.POST("/giveadminrights", GiveAdminRights())
+
+	s.POST("/getid", GETid())
+}
+
+func GETid() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		sessions := sessions.Default(ctx)
+		id := sessions.Get("id")
+		ctx.JSON(200, gin.H{"message": id})
+	}
 }
 
 func userExists(login string) bool {
@@ -57,6 +67,21 @@ func RegisterUSER() gin.HandlerFunc {
 			ctx.JSON(400, gin.H{"message": "Ошибка"})
 			return
 		}
+
+		var image entity.Images
+
+		// Execute a raw SQL query to get the image data
+		err := db.Raw("SELECT data FROM images WHERE id = ?", 1).Scan(&image).Error
+		if err != nil {
+			log.Println(err)
+		}
+
+		err = db.Exec("UPDATE users SET user_avatar = ? WHERE user_login = ?", image.ImageData, user.Login).Error
+		if err != nil {
+			log.Println("Failed to update user avatar:", err)
+			return
+		}
+
 		code := emailalerts.ConfirmEmail(user.Email)
 
 		sessions := sessions.Default(ctx)
@@ -115,7 +140,7 @@ func LoginUser() gin.HandlerFunc {
 		}
 
 		var userOK entity.User
-		query := "SELECT user_password, user_email FROM users WHERE user_login = ?"
+		query := "SELECT user_password, user_email, user_id FROM users WHERE user_login = ?"
 
 		if err := db.Raw(query, user.Login).Scan(&userOK).Error; err != nil {
 			if err == gorm.ErrRecordNotFound {
@@ -135,8 +160,8 @@ func LoginUser() gin.HandlerFunc {
 		}
 
 		sessions := sessions.Default(ctx)
-		sessions.Set("login", user.Login)
-		sessions.Set("id", user.ID)
+		sessions.Set("login", userOK.Login)
+		sessions.Set("id", userOK.ID)
 
 		if err := sessions.Save(); err != nil {
 			log.Print("Failed to save session: ", err)
