@@ -9,4 +9,8 @@ export const linksList: LinksConfiguration = [
         path: "/catalog",
         value: "Каталог",
     },
+    {
+        path: "/admin",
+        value: "Редактировать товар",
+    },
 ]

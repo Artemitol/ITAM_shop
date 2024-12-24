@@ -7,6 +7,7 @@ import { ProductPage } from "@pages/product-page"
 import { WishlistPage } from "@pages/wishlist-page"
 import { CartPage } from "@pages/cart-page"
 import { AdminPanel } from "@pages/admin-panel"
+import { EditProduct } from "@pages/edit-product"
 
 export const router = createBrowserRouter([
     {
@@ -52,6 +53,18 @@ export const router = createBrowserRouter([
                     <Spinner
                         style={{ marginTop: "7rem" }}
                         label='Can`t load admin panel page...'
+                        color='danger'
+                        labelColor='danger'
+                    />
+                ),
+            },
+            {
+                path: "admin/edit-product/:product_id",
+                element: <EditProduct />,
+                errorElement: (
+                    <Spinner
+                        style={{ marginTop: "7rem" }}
+                        label='Can`t load product edit page or product doesnot exists...'
                         color='danger'
                         labelColor='danger'
                     />
