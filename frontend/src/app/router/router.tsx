@@ -57,18 +57,20 @@ export const router = createBrowserRouter([
                         labelColor='danger'
                     />
                 ),
-            },
-            {
-                path: "admin/edit-product/:product_id",
-                element: <EditProduct />,
-                errorElement: (
-                    <Spinner
-                        style={{ marginTop: "7rem" }}
-                        label='Can`t load product edit page or product doesnot exists...'
-                        color='danger'
-                        labelColor='danger'
-                    />
-                ),
+                children: [
+                    {
+                        path: "edit-product",
+                        element: <EditProduct />,
+                        errorElement: (
+                            <Spinner
+                                style={{ marginTop: "7rem" }}
+                                label='Can`t load products editing page'
+                                color='danger'
+                                labelColor='danger'
+                            />
+                        ),
+                    },
+                ],
             },
             {
                 path: "catalog/:product_id",
