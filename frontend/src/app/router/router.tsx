@@ -7,7 +7,6 @@ import { ProductPage } from "@pages/product-page"
 import { WishlistPage } from "@pages/wishlist-page"
 import { CartPage } from "@pages/cart-page"
 import { AdminPanel } from "@pages/admin-panel"
-import { EditProduct } from "@pages/edit-product"
 
 export const router = createBrowserRouter([
     {
