@@ -3,6 +3,7 @@ export {
     productsApi,
     useGetProductsQuery,
     useGetProductQuery,
+    useRemoveProductMutation,
 } from "./api/item-api"
 export {
     cartApi,

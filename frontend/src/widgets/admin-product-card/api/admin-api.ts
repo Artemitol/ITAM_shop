@@ -86,7 +86,7 @@ export const adminApi = baseApi.injectEndpoints({
                 "Cart",
                 "Catalog",
                 "Wishlist",
-                { type: "Product", id: productId.id },
+                { type: "Product", id: productId },
             ],
         }),
         // addFeaturesToItem: create.mutation<

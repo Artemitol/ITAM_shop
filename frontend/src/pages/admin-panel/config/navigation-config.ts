@@ -3,11 +3,10 @@ import { NavButton } from "@widgets/admin-nav-button"
 export const navButtonsConfig: NavButton[] = [
     {
         textValue: "Редактирование товаров",
-        link: "edit-product",
+        link: "edit-products",
     },
     {
         textValue: "Создание нового продукта",
-        link: "edit-product",
+        link: "create-product",
     },
-    
 ]

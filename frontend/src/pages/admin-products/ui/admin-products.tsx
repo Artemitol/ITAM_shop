@@ -11,15 +11,21 @@ import {
     TableHeader,
     TableRow,
 } from "@nextui-org/react"
-import { productDefaultValue, useGetProductsQuery } from "@entities/product"
+import {
+    productDefaultValue,
+    ProductId,
+    useGetProductsQuery,
+} from "@entities/product"
 import { useMemo, useState } from "react"
 import { RemoveIcon } from "@shared/ui/icons"
-import { useRemoveProductMutation } from "@entities/product/api/item-api"
+import { useRemoveProductMutation } from "@entities/product"
+import { useNavigate } from "react-router-dom"
 
 export function AdminProducts() {
     const { data, isError, isLoading } = useGetProductsQuery()
     const [removeItem] = useRemoveProductMutation()
 
+    const navigate = useNavigate()
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [itemsPerPage, setItemsPerPage] = useState<string>("5")
 
@@ -46,17 +52,24 @@ export function AdminProducts() {
         <div className={classes.adminProducts}>
             <div className={classes.filters}>
                 <Input
-                    className='mb-5'
+                    className='w-30'
                     placeholder='enter value...'
                     label='Enter products per page'
                     value={itemsPerPage}
                     onValueChange={setItemsPerPage}
                 />
-                <Button color='primary'>Создать новый продукт</Button>
+                <Button size='lg' color='primary'>
+                    Создать новый продукт
+                </Button>
             </div>
             <Table
                 isCompact
-                selectionMode='multiple'
+                selectionMode='single'
+                onRowAction={(key) => {
+                    const productId: ProductId = data[Number(key)].product_id
+
+                    navigate(`../edit-product/${productId}`)
+                }}
                 bottomContent={
                     <div className='flex w-full justify-center'>
                         <Pagination

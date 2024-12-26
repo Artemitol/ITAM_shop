@@ -8,6 +8,8 @@ import { WishlistPage } from "@pages/wishlist-page"
 import { CartPage } from "@pages/cart-page"
 import { AdminPanel } from "@pages/admin-panel"
 import { AdminProducts } from "@pages/admin-products"
+import { CreateNewProduct } from "@widgets/create-new-product"
+import { AdminProductCard } from "@widgets/admin-product-card"
 
 export const router = createBrowserRouter([
     {
@@ -59,12 +61,36 @@ export const router = createBrowserRouter([
                 ),
                 children: [
                     {
-                        path: "edit-product",
+                        path: "edit-products",
                         element: <AdminProducts />,
                         errorElement: (
                             <Spinner
                                 style={{ marginTop: "7rem" }}
-                                label='Can`t load products editing page'
+                                label='Can`t load products list'
+                                color='danger'
+                                labelColor='danger'
+                            />
+                        ),
+                    },
+                    {
+                        path: "edit-product/:product_id",
+                        element: <AdminProductCard />,
+                        errorElement: (
+                            <Spinner
+                                style={{ marginTop: "7rem" }}
+                                label='Can`t load product editing page'
+                                color='danger'
+                                labelColor='danger'
+                            />
+                        ),
+                    },
+                    {
+                        path: "create-product",
+                        element: <CreateNewProduct />,
+                        errorElement: (
+                            <Spinner
+                                style={{ marginTop: "7rem" }}
+                                label='Can`t load products creation page'
                                 color='danger'
                                 labelColor='danger'
                             />
