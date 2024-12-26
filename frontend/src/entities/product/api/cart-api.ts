@@ -17,7 +17,6 @@ export const cartApi = baseApi.injectEndpoints({
             },
             providesTags: ["Cart"],
         }),
-
         // POST
         addToCart: create.mutation<void, ProductId>({
             query: (id) => ({ method: "POST", url: `/cart/add/${id}` }),
@@ -28,6 +27,19 @@ export const cartApi = baseApi.injectEndpoints({
                 "Catalog",
                 "Wishlist",
                 { type: "Product", id: productId },
+            ],
+        }),
+        createProduct: create.mutation<void, Partial<Product>>({
+            query: (product) => ({
+                method: "POST",
+                body: product,
+                url: `/createnewproduct`,
+            }),
+            invalidatesTags: (result, error, product) => [
+                "Cart",
+                "Catalog",
+                "Wishlist",
+                { type: "Product", id: product.product_id },
             ],
         }),
 
@@ -50,4 +62,5 @@ export const {
     useAddToCartMutation,
     useGetCartQuery,
     useRemoveFromCartMutation,
+    useCreateProductMutation,
 } = cartApi

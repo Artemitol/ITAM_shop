@@ -10,6 +10,7 @@ export {
     useAddToCartMutation,
     useGetCartQuery,
     useRemoveFromCartMutation,
+    useCreateProductMutation,
 } from "./api/cart-api"
 export {
     wishListApi,

@@ -23,7 +23,7 @@ export function CatalogPage() {
         <>
             <div className={classes.homepageBg}></div>
             <section className={classes.content}>
-                <Button onClick={clickHandler}>Filter</Button>
+                {/* <Button onClick={clickHandler}>Filter</Button> */}
                 <ItemsList data={data} />
             </section>
         </>
