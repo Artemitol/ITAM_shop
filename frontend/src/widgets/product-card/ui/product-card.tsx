@@ -12,13 +12,15 @@ export function ProductCard() {
     // Получение id товара из роутинга
     const params = useParams<{ product_id: string }>()
     // Получение товара из стора или из запроса
-    const { data = requestTypeDefaultVale } = useGetProductQuery(
-        Number(params.product_id)
-    )
+    const {
+        data = requestTypeDefaultVale,
+        isLoading,
+        isError,
+    } = useGetProductQuery(Number(params.product_id))
     const { product, features } = data
 
     // Если данных нет, или они грузятся - отображается спинер
-    if (!data) {
+    if (isLoading) {
         return (
             <Spinner
                 style={{ marginTop: "5rem" }}
@@ -26,6 +28,12 @@ export function ProductCard() {
                 color='warning'
                 labelColor='warning'
             />
+        )
+    }
+
+    if (isError || (!isLoading && !data)) {
+        return (
+            <div>Error while parsing product or there is no such product</div>
         )
     }
 

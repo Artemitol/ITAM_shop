@@ -7,6 +7,7 @@ import { ProductPage } from "@pages/product-page"
 import { WishlistPage } from "@pages/wishlist-page"
 import { CartPage } from "@pages/cart-page"
 import { AdminPanel } from "@pages/admin-panel"
+import { AdminProducts } from "@pages/admin-products"
 
 export const router = createBrowserRouter([
     {
@@ -59,7 +60,7 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: "edit-product",
-                        element: <EditProduct />,
+                        element: <AdminProducts />,
                         errorElement: (
                             <Spinner
                                 style={{ marginTop: "7rem" }}

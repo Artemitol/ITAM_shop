@@ -14,7 +14,19 @@ export const productsApi = baseApi.injectEndpoints({
             query: (productId) => `/get_item_page/${productId}`,
             transformResponse: (responce: unknown) =>
                 requestDTOschema.parse(responce),
-            providesTags: ["Product"],
+            providesTags: (result, error, productId) => [
+                { type: "Product", id: productId },
+            ],
+        }),
+        // DELETE
+        removeProduct: create.mutation<void, ProductId>({
+            query: (id) => ({ url: `/deleteproduct/${id}`, method: "POST" }),
+            invalidatesTags: (result, error, productId) => [
+                "Cart",
+                "Catalog",
+                "Wishlist",
+                { type: "Product", id: productId },
+            ],
         }),
 
         // GET Сatalog
@@ -31,6 +43,7 @@ export const productsApi = baseApi.injectEndpoints({
 export const {
     // Product
     useGetProductQuery,
+    useRemoveProductMutation,
 
     // Catalog
     useGetProductsQuery,

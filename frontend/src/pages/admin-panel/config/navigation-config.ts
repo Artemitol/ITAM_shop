@@ -6,43 +6,8 @@ export const navButtonsConfig: NavButton[] = [
         link: "edit-product",
     },
     {
-        textValue: "Будущий функционал......",
+        textValue: "Создание нового продукта",
         link: "edit-product",
     },
-    {
-        textValue: "Будущий функционал......",
-        link: "edit-product",
-    },
-    {
-        textValue: "Будущий функционал......",
-        link: "edit-product",
-    },
-    {
-        textValue: "Будущий функционал......",
-        link: "edit-product",
-    },
-    {
-        textValue: "Будущий функционал......",
-        link: "edit-product",
-    },
-    {
-        textValue: "Будущий функционал......",
-        link: "edit-product",
-    },
-    {
-        textValue: "Будущий функционал......",
-        link: "edit-product",
-    },
-    {
-        textValue: "Будущий функционал......",
-        link: "edit-product",
-    },
-    {
-        textValue: "Будущий функционал......",
-        link: "edit-product",
-    },
-    {
-        textValue: "Будущий функционал......",
-        link: "edit-product",
-    },
+    
 ]
