@@ -13,8 +13,13 @@ export const sessionBaseApi = baseApi.injectEndpoints({
         register: create.mutation<void, Partial<User>>({
             query: (body) => ({ url: "/register", body: body, method: "POST" }),
         }),
+
+        logout: create.mutation<void, void>({
+            query: () => ({ url: "/logout", method: "POST" }),
+        }),
     }),
     overrideExisting: true,
 })
 
-export const { useLoginMutation, useRegisterMutation } = sessionBaseApi
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation } =
+    sessionBaseApi

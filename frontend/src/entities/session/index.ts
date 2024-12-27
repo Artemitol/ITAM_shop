@@ -13,4 +13,5 @@ export {
     sessionBaseApi,
     useLoginMutation,
     useRegisterMutation,
+    useLogoutMutation,
 } from "./api/session-api"

@@ -33,7 +33,7 @@ export const cartApi = baseApi.injectEndpoints({
             query: (product) => ({
                 method: "POST",
                 body: product,
-                url: `/createnewproduct`,
+                url: `/createnewprod`,
             }),
             invalidatesTags: (result, error, product) => [
                 "Cart",

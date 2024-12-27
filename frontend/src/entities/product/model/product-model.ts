@@ -15,7 +15,7 @@ export type Product = {
     product_id: ProductId
     product_name: ProductName
     product_price: ProductPrice
-    product_image: ProductImage
+    product_image: ProductImage | null
     product_description: ProductDescription
     product_category: ProductCategory
     product_stock_quantity: ProductStockQuantity
@@ -39,7 +39,7 @@ export const productDTOschema = z.object({
     product_id: z.number(),
     product_price: z.number(),
     product_name: z.string(),
-    product_image: z.string(),
+    product_image: z.string().nullable(),
     product_description: z.string(),
     product_category: z.string(),
     product_stock_quantity: z.number(),

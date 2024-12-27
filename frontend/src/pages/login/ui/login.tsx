@@ -1,18 +1,24 @@
 import React, { useState } from "react"
 import { Button, Card, Input, Spacer } from "@nextui-org/react"
 import { useNavigate } from "react-router-dom"
-import { useLoginMutation } from "@entities/session"
+import { useLoginMutation, useLogoutMutation } from "@entities/session"
 
 export function LoginPage() {
     const navigate = useNavigate()
     const [login] = useLoginMutation()
+    const [logout] = useLogoutMutation()
 
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
-    const handleLogin = () => {
+    function handleLogin() {
         login({ login: email, password: password })
         console.log("Logging in with:", { email, password })
+    }
+
+    function handleLogout() {
+        logout()
+        console.log("loged out!")
     }
 
     return (
@@ -46,6 +52,9 @@ export function LoginPage() {
                     Register
                 </Button>
             </div>
+            <Button onPress={handleLogout} color='danger'>
+                Logout
+            </Button>
         </Card>
     )
 }

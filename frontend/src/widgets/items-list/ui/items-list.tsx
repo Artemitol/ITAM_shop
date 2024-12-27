@@ -12,6 +12,11 @@ export function ItemsList({ data }: ItemsListProps) {
     const [page, setPage] = useState<number>(1)
     const rowsPerPage = 5
 
+    const totalPages = useMemo(() => {
+        if (!data) return 1
+        return Math.ceil(data.length / rowsPerPage)
+    }, [data, rowsPerPage])
+
     const resultData = useMemo(() => {
         const start = (page - 1) * rowsPerPage
         const end = start + rowsPerPage
@@ -36,7 +41,7 @@ export function ItemsList({ data }: ItemsListProps) {
                 <Pagination
                     showShadow
                     showControls
-                    total={data?.length / rowsPerPage}
+                    total={totalPages}
                     page={page}
                     onChange={(value) => {
                         setPage(value)
