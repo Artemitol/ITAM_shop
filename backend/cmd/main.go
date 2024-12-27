@@ -11,7 +11,7 @@ import (
 	transactions "myapp/internal/transactions"
 	"net/http"
 
-	"github.com/gin-contrib/cors"
+	//"github.com/gin-contrib/cors"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
@@ -25,7 +25,7 @@ func main() {
 	config.DB.AutoMigrate(&entity.User{}, &entity.Order{}, &entity.Favorite{})
 
 	r := gin.Default()
-	r.Use(cors.Default())
+	//r.Use(cors.Default())
 	r.Use(func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "http://localhost:5173")
 		c.Header("Access-Control-Allow-Credentials", "true")
