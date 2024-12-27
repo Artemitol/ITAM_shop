@@ -206,13 +206,6 @@ func AddToFavorites(c *gin.Context) {
 		return
 	}
 
-	query = "UPDATE products SET is_in_fav = ? WHERE product_id = ?"
-	result = db.Exec(query, true, id)
-	if result.Error != nil {
-		c.JSON(500, gin.H{"message": "cant add"})
-		return
-	}
-
 	c.JSON(http.StatusOK, gin.H{"Сообщение": "Продукт добавлен в избранное"})
 }
 
@@ -235,13 +228,6 @@ func RemoveFromFavorites(c *gin.Context) {
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(500, gin.H{"message": "Failed remove"})
-		return
-	}
-
-	query = "UPDATE products SET is_in_fav = ? WHERE product_id = ?"
-	result = db.Exec(query, false, id)
-	if result.Error != nil {
-		c.JSON(500, gin.H{"message": "cant add"})
 		return
 	}
 
@@ -327,13 +313,6 @@ func AddToCart(c *gin.Context) {
 		fmt.Println("Существует ли продукт:", exists)
 	}
 
-	query = "UPDATE products SET is_in_cart = ? WHERE product_id = ?"
-	result = db.Exec(query, true, id)
-	if result.Error != nil {
-		c.JSON(500, gin.H{"message": "cant add"})
-		return
-	}
-
 	fmt.Println(exists)
 	if exists {
 		c.JSON(http.StatusOK, gin.H{"Сообщение": "Был ранее добавлен"})
@@ -371,13 +350,6 @@ func RemoveFromCart(c *gin.Context) {
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(500, gin.H{"message": "Failed remove"})
-		return
-	}
-
-	query = "UPDATE products SET is_in_cart = ? WHERE product_id = ?"
-	result = db.Exec(query, false, id)
-	if result.Error != nil {
-		c.JSON(500, gin.H{"message": "cant add"})
 		return
 	}
 
