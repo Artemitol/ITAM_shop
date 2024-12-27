@@ -31,7 +31,7 @@ export const productsApi = baseApi.injectEndpoints({
 
         // GET Сatalog
         getProducts: create.query<Product[], void>({
-            query: () => ({ url: "/catalog"}),
+            query: () => ({ url: "/catalog" }),
             transformResponse: (responce: unknown) =>
                 productDTOschema.array().parse(responce),
             providesTags: ["Catalog"],
