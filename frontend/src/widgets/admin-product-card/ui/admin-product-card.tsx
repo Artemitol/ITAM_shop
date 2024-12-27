@@ -3,10 +3,20 @@ import { Button, Input, Select, SelectItem, Spinner } from "@nextui-org/react"
 import { requestTypeDefaultVale, useGetProductQuery } from "@entities/product"
 import { useParams } from "react-router-dom"
 import { useState } from "react"
-import { useEditProductNameMutation } from "../api/admin-api"
+import {
+    useEditProductCategoryMutation,
+    useEditProductDescriptionMutation,
+    useEditProductNameMutation,
+    useEditProductPriceMutation,
+    useEditProductStockQuantityMutation,
+} from "../api/admin-api"
 
 export function AdminProductCard() {
     const [editName] = useEditProductNameMutation()
+    const [editCategory] = useEditProductCategoryMutation()
+    const [editPrice] = useEditProductPriceMutation()
+    const [editDescription] = useEditProductDescriptionMutation()
+    const [editQuantity] = useEditProductStockQuantityMutation()
 
     const params = useParams<{ product_id: string }>()
     // Получение товара из стора или из запроса
@@ -27,8 +37,19 @@ export function AdminProductCard() {
                 editName({ id: product.product_id, value })
                 break
             case "category":
-                editName(value)
+                editCategory({ id: product.product_id, value })
                 break
+            case "price":
+                editPrice({ id: product.product_id, value })
+                break
+            case "description":
+                editDescription({ id: product.product_id, value })
+                break
+            case "quantity":
+                editQuantity({ id: product.product_id, value })
+                break
+            default:
+                console.log("unknown case")
         }
     }
 
