@@ -47,7 +47,7 @@ func GetCatalogItems(c *gin.Context) {
 		product := products[i]
 		session := sessions.Default(c)
 		UserID := session.Get("id")
-		if UserID == nil {
+		if UserID == nil || UserID == 0 {
 			c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
 			return
 		}
@@ -77,7 +77,7 @@ func GetItem(c *gin.Context) {
 	var product entity.Product
 	session := sessions.Default(c)
 	UserID := session.Get("id")
-	if UserID == nil {
+	if UserID == nil || UserID == 0 {
 		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
 		return
 	}
@@ -143,7 +143,7 @@ func GetItem(c *gin.Context) {
 func GetFavoriteItems(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("id")
-	if userID == nil {
+	if userID == nil || userID == 0 {
 		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
 		return
 	}
@@ -172,7 +172,7 @@ func GetFavoriteItems(c *gin.Context) {
 func AddToFavorites(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("id")
-	if userID == nil {
+	if userID == nil || userID == 0 {
 		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
 		return
 	}
@@ -212,7 +212,7 @@ func AddToFavorites(c *gin.Context) {
 func RemoveFromFavorites(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("id")
-	if userID == nil {
+	if userID == nil || userID == 0 {
 		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
 		return
 	}
@@ -262,7 +262,7 @@ func ProductFilter(c *gin.Context) {
 func GetCart(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("id")
-	if userID == nil {
+	if userID == nil || userID == 0 {
 		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
 		return
 	}
@@ -291,7 +291,7 @@ func GetCart(c *gin.Context) {
 func AddToCart(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("id")
-	if userID == nil {
+	if userID == nil || userID == 0 {
 		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
 		return
 	}
@@ -333,7 +333,7 @@ func AddToCart(c *gin.Context) {
 func RemoveFromCart(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("id")
-	if userID == nil {
+	if userID == nil || userID == 0 {
 		c.JSON(http.StatusUnauthorized, gin.H{"Ошибка": "Пользователь не авторизован"})
 		return
 	}
