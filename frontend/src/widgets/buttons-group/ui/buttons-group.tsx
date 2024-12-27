@@ -14,7 +14,7 @@ export function ButtonsGroup() {
                 </Link>
             </li>
             <li>
-                <Link className='contents' to='/catalog'>
+                <Link className='contents' to='/login'>
                     <Button className={classes.button} isIconOnly>
                         <UserIcon />
                     </Button>

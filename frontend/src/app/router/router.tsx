@@ -10,6 +10,8 @@ import { AdminPanel } from "@pages/admin-panel"
 import { AdminProducts } from "@pages/admin-products"
 import { CreateNewProduct } from "@widgets/create-new-product"
 import { AdminProductCard } from "@widgets/admin-product-card"
+import { LoginPage } from "@pages/login"
+import { Register } from "@pages/register"
 
 export const router = createBrowserRouter([
     {
@@ -113,6 +115,14 @@ export const router = createBrowserRouter([
             {
                 path: "cart",
                 element: <CartPage />,
+            },
+            {
+                path: "login",
+                element: <LoginPage />,
+            },
+            {
+                path: "register",
+                element: <Register />,
             },
         ],
     },
