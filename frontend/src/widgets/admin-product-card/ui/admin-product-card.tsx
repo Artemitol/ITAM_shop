@@ -2,8 +2,12 @@ import classes from "./admin-product-card.module.scss"
 import { Button, Input, Select, SelectItem, Spinner } from "@nextui-org/react"
 import { requestTypeDefaultVale, useGetProductQuery } from "@entities/product"
 import { useParams } from "react-router-dom"
+import { useState } from "react"
+import { useEditProductNameMutation } from "../api/admin-api"
 
 export function AdminProductCard() {
+    const [editName] = useEditProductNameMutation()
+
     const params = useParams<{ product_id: string }>()
     // Получение товара из стора или из запроса
     const {
@@ -12,6 +16,21 @@ export function AdminProductCard() {
         isLoading,
     } = useGetProductQuery(Number(params.product_id))
     const { product, features } = data
+    const [value, setValue] = useState("")
+    const [selectedField, setSelectedField] = useState<
+        "name" | "category" | "price" | "description" | "quantity" | "" | string
+    >("")
+
+    function handleClick() {
+        switch (selectedField) {
+            case "name":
+                editName({ id: product.product_id, value })
+                break
+            case "category":
+                editName(value)
+                break
+        }
+    }
 
     if (isLoading) {
         return <Spinner label='Loading product data' />
@@ -27,6 +46,8 @@ export function AdminProductCard() {
         )
     }
 
+    console.log(product)
+
     return (
         <div className={classes.adminProduct}>
             <h4>{product.product_name}</h4>
@@ -36,12 +57,22 @@ export function AdminProductCard() {
                     size='lg'
                     aria-label='Select which value to update'
                     placeholder='Выберите интересующее вас поле'
+                    onChange={(e) => setSelectedField(e.target.value)}
                 >
-                    <SelectItem>Category</SelectItem>
-                    <SelectItem>Name</SelectItem>
+                    <SelectItem value={"category"}>Category</SelectItem>
+                    <SelectItem value={"name"}>Name</SelectItem>
+                    <SelectItem value={"price"}>Price</SelectItem>
+                    <SelectItem value={"description"}>Description</SelectItem>
+                    <SelectItem value={"quantity"}>Quantity</SelectItem>
                 </Select>
                 <div className={classes.input}>
-                    <Input size='lg' placeholder='введите значение...' />
+                    <Input
+                        size='lg'
+                        placeholder='введите значение...'
+                        required
+                        value={value}
+                        onValueChange={setValue}
+                    />
                     <Button size='lg' color='danger'>
                         Update Value
                     </Button>

@@ -52,6 +52,7 @@ export function LoginPage() {
                     Register
                 </Button>
             </div>
+            <Spacer y={1.5} />
             <Button onPress={handleLogout} color='danger'>
                 Logout
             </Button>

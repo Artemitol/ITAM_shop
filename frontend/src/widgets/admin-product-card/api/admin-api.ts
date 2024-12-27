@@ -121,3 +121,13 @@ export const adminApi = baseApi.injectEndpoints({
     }),
     overrideExisting: true,
 })
+
+export const {
+    useDeleteProductMutation,
+    useEditProductCategoryMutation,
+    useEditProductDescriptionMutation,
+    useEditProductNameMutation,
+    useEditProductPriceMutation,
+    useEditProductStockQuantityMutation,
+    useUpdateImageForProductMutation,
+} = adminApi

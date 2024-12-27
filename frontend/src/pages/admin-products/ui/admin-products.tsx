@@ -58,9 +58,6 @@ export function AdminProducts() {
                     value={itemsPerPage}
                     onValueChange={setItemsPerPage}
                 />
-                <Button size='lg' color='primary'>
-                    Создать новый продукт
-                </Button>
             </div>
             <Table
                 isCompact
