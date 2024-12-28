@@ -10,7 +10,7 @@ type ItemsListProps = {
 
 export function ItemsList({ data }: ItemsListProps) {
     const [page, setPage] = useState<number>(1)
-    const rowsPerPage = 5
+    const rowsPerPage = 6
 
     const totalPages = useMemo(() => {
         if (!data) return 1
