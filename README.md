@@ -1,36 +1,81 @@
-# ITAM Shop
+# ITAM shop
 
-## О проекте
-ITAM Shop - современное решение в сфере e-commerce. Молодежная платформа для продажи товаров.
+## Введение
+ITAM Shop - это мощное веб-приложение для управления вашим интернет-магазином. Оно предоставляет все необходимые инструменты для эффективного управления товарами, заказами и клиентами.
+<table>
+  <tr>
+    <td>
+      <img src="assets/catalog.png" alt="Изображение функционала" width="300"/>
+      <p align="center">Функционал каталога</p>
+    </td>
+    <td>
+      <img src="assets/login.png" alt="Login" width="300"/>
+      <p align="center">Страница входа</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="assets/admin-panel.png" alt="Админ панель" width="300"/>
+      <p align="center">Админ панель</p>
+    </td>
+    <td>
+      <img src="assets/create-new-product.png" alt="Создание нового продукта" width="300"/>
+      <p align="center">Создание нового продукта</p>
+    </td>
+  </tr>
+</table>
 
-## Как запустить проект
+## Установка и запуск приложения
 
-1. Убедитесь, что у вас установлены Docker и Docker Compose.
-2. Выполните команду для сборки и запуска контейнеров:
+Чтобы начать работу с ITAM Shop, выполните следующие шаги:
 
+1. **Клонируйте репозиторий**:
     ```bash
-    docker-compose up --build
+    git clone https://github.com/yourusername/ITAM_shop.git
     ```
 
-3. После успешного запуска, бекенд будет доступен по адресу [http://localhost:8080](http://localhost:8080), а фронтенд - по адресу [http://localhost:5173](http://localhost:5173).
+2. **Перейдите в каталог проекта**:
+    ```bash
+    cd ITAM_shop
+    ```
 
-## Как отключить проект
 
-Для остановки и удаления контейнеров выполните команду:
+3. **Установите и запустите docker**: <br>
 
-```bash
-docker-compose down
-```
+    ```bash
+    # Установите Docker
+    sudo apt-get update
+    sudo apt-get install -y docker.io
 
-## Основные функции
-* Регистрация и авторизация пользователей
-* Регистрация и авторизация пользователей
-* Просмотр и поиск товаров
-* Добавление товаров в корзину и вишлист
-* Управление товарами для администраторов
+    # Убедитесь, что Docker установлен правильно
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    docker --version
 
-## Используемые технологии
-* Backend: Golang
-* Frontend: React
-* Базы данных: PostgreSQL
-* Docker для контейнеризации
+    # Установите Docker Compose
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+
+    # Убедитесь, что Docker Compose установлен правильно
+    docker-compose --version
+    ```
+
+4. **Запустите проект**:
+    ```bash
+    docker-compose up
+    ```
+
+5. **Отключите приложение**:
+    ```bash
+    docker-compose down
+    ```
+
+## Использование
+
+После запуска приложения вы можете получить к нему доступ в вашем веб-браузере по адресу [http://localhost:5173](http://localhost:5173). Оттуда вы можете начать добавлять и управлять вашими ИТ-активами.
+
+
+## Особенности
+
+- **Управление инвентарем**: Управляйте уровнями запасов и получайте уведомления, когда запасы заканчиваются.
+- **Управление пользователями**: Контролируйте доступ к приложению с помощью ролей и разрешений пользователей.
