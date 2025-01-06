@@ -1,54 +1,54 @@
 # ITAM_Shop Backend
 
-ITAM_Shop - это веб-приложение, разработанное с использованием Go и фреймворка Gin. Эта часть репозитория содержит серверную часть приложения, которая обрабатывает запросы, управляет сессиями и взаимодействует с базой данных.
+ITAM_Shop is a web application developed using Go and the Gin framework. This part of the repository contains the backend of the application, which handles requests, manages sessions, and interacts with the database.
 
-### Предварительные требования
+### Prerequisites
 
-- Установите [Go]
-- Убедитесь что с вашего компьютера есть доступ к удаленной базе данных. Если такогого нет обращаться к @BRDDRTy в Telegram
+- Install [Go]
+- Ensure that your computer has access to the remote database. If not, contact @BRDDRTy on Telegram.
 
-### Клонирование репозитория
+### Cloning the repository
 
 ```bash
 git clone https://github.com/Artemitol/ITAM_shop
 ```
-### Запуск проекта
+### Running the project
 
-## Быстрый запуск из директории ITAM_Shop
+## Quick start from the ITAM_Shop directory
 ```bash
-    ./docker/build.sh
-    ./docker/compose_up.sh
+	./docker/build.sh
+	./docker/compose_up.sh
 ```
-## Отключение из директории ITAM_Shop
+## Shutting down from the ITAM_Shop directory
 ```bash
-    ./docker/compose_down.sh
+	./docker/compose_down.sh
 ```
-## Дополнительная информация по запуску
-Если отказано в доступе
+## Additional information for running
+If access is denied
 ```bash
-    chmod -R +x ./docker
+	chmod -R +x ./docker
 ```
-Посмотреть логи приложения
+View application logs
 ```bash
-    docker logs shop-itam
+	docker logs shop-itam
 ```
 
-- Переключитесь на нужную ветку(подразумевается develop)
+- Switch to the required branch (assumed to be develop)
 ```bash
 git checkout develop
 ```
 
-- Перейдите в директорию backend
+- Navigate to the backend directory
 ```bash
 cd backend/
 ```
 
-- Проверьте установленные зависимости
+- Check installed dependencies
 ```bash
 go mod tidy
 ```
 
-- Перед запуском проекта настройте брандмауэр
+- Configure the firewall before running the project
 ```bash
 sudo ufw allow 3000/tcp
 sudo ufw allow 8080/tcp
@@ -57,103 +57,100 @@ sudo ufw reload
 sudo ufw status
 ```
 
-- Для запуска пропишите следущие команды
+- To start, run the following commands
 ```bash
 cd cmd
 go run .
 ```
-Сервер будет запущен на порту http://localhost:8080
-Проверить cтатус сервера можно по http://localhost:8080/health
+The server will be running on port http://localhost:8080
+Check the server status at http://localhost:8080/health
 
-### Эндпоинты
-Здоровье сервера
+### Endpoints
+Server health
 
-    GET /health - Проверка состояния сервера.
+	GET /health - Check server status.
 
-Регистрация и вход
+Registration and login
 
-    POST /register - Добавляет пользователя в базу данных и сохраняет в cookie код подтверждения почты Request -> entity.User Response -> .
-    POST /login    - Вход пользователя в аккаунт.
-    POST /checkemail - Отправка email с кодом и его подтверждение Request -> {"code":"..."}. Response -> 200 если код правильный
-    POST /newpassword - Обновление пароля если пользователь зарегистрирован или восстановление пароль Request -> `json:"user_password"`
-    POST /recoverpassword - Восстановление пароля Request -> `json:"user_login"`
+	POST /register - Adds a user to the database and saves the email confirmation code in a cookie. Request -> entity.User Response -> .
+	POST /login    - User login.
+	POST /checkemail - Send email with code and confirm it. Request -> {"code":"..."}. Response -> 200 if the code is correct.
+	POST /newpassword - Update password if the user is registered or recover password. Request -> `json:"user_password"`
+	POST /recoverpassword - Recover password. Request -> `json:"user_login"`
 
-    Сценарии:
-        Регистрация:
-        - 1. /register Отправка запроса на регистрацию формата entity.User(user_login, user_email, user_password)
-        - 2. Со стороны бэка отправляется письмо пользователю с кодом подтверждения после чего пользователь должен подтвердить почту
-        - 3. /checkemail Запрос -> `json:"code"`. Подтверждение почты Response 200 OK
-        - 4. После получения ответа пользователь успешно зарегистрирован
-        Вход:
-        - 1. /login Вход пользователя
-        Восстановление пароля:
-        - 1. /recoverpassword Отправка запроса `json:"user_login"`
-        - 2. Со стороны бэка отправляется письмо пользователю с кодом подтверждения после чего пользователь должен подтвердить почту
-        - 3. /checkemail Запрос -> `json:"code"`. Подтверждение почты Response 200 OK
-        - 4. После подтверждения почты обновление пароля
-        - 5. /newpassword Запрос -> `json:"user_password"`
-        - 6. После получения ответа 200 пароль успешно изменен
+	Scenarios:
+		Registration:
+		- 1. /register Send registration request in the format entity.User(user_login, user_email, user_password)
+		- 2. The backend sends an email to the user with a confirmation code, after which the user must confirm the email.
+		- 3. /checkemail Request -> `json:"code"`. Email confirmation Response 200 OK
+		- 4. After receiving the response, the user is successfully registered.
+		Login:
+		- 1. /login User login
+		Password recovery:
+		- 1. /recoverpassword Send request `json:"user_login"`
+		- 2. The backend sends an email to the user with a confirmation code, after which the user must confirm the email.
+		- 3. /checkemail Request -> `json:"code"`. Email confirmation Response 200 OK
+		- 4. After confirming the email, update the password.
+		- 5. /newpassword Request -> `json:"user_password"`
+		- 6. After receiving the response 200, the password is successfully changed.
 
-Личный кабинет
+Personal account
 
-	POSt /page/personal - получение всей информации о пользователе для страницы личного кабинета Response -> entity.User
-    POST /logout - выход из личного кабинета(удаляет информацию о сессии. После вызова сделать редирект к каталогу)
-    POST /updateavatar - Обновить аватар пользователя Request -> `json:"user_avatar"` формат jpeg 60Кб id пользователя определяется автоматически
-    POST /updatename - Обновить имя пользователя Request -> `json:"user_name"` 
-    POST /updatesurname - Обновить фамилию пользователя Request -> `json:"user_surname"` 
-    POST /updatepassword - Обновить пароль пользователя Request -> `json:"user_password"` 
+	POST /page/personal - Get all user information for the personal account page. Response -> entity.User
+	POST /logout - Log out of the personal account (deletes session information. After calling, redirect to the catalog).
+	POST /updateavatar - Update user avatar. Request -> `json:"user_avatar"` format jpeg 60KB, user ID is determined automatically.
+	POST /updatename - Update user name. Request -> `json:"user_name"`
+	POST /updatesurname - Update user surname. Request -> `json:"user_surname"`
+	POST /updatepassword - Update user password. Request -> `json:"user_password"`
 
+Transactions
 
-Транзакции
+	POST /givemoney Request {`json:"user_login"`, `json:"user_money"`} Add money to the user's account.
 
-    POST /givemoney Request {`json:"user_login"`, `json:"user_money"`} Добавить деньги на счет пользователя
+	For the backend:
+		- Added function TakeOffMoney(login, price) -> bool Returns whether the payment was successful or not.
 
-    Для бэкэнда:
-        - Добавлена функция TakeOffMoney(login, price) -> bool Возвращает прошла ли оплата или нет
+Catalog
 
-Каталог
+	GET /catalog - Get a list of products from the catalog.
+	POST /filter - Apply filter to products in the catalog.
 
-	GET /catalog - Получение списка товаров из каталога
-	POST /filter - Применение фильтра к товарам в каталоге
+	GET /fav_items - Get a list of favorite products as an array of entity.Product.
+	GET /get_item_page/:id - Get product parameters by its ID as entity.Product.
+	POST /fav_items/:id - Add product to favorites.
+	DELETE /fav_items/:id - Remove product from favorites.
 
-	GET /fav_items - Получение списка товаров, добавленных в избранное в виде массива entity.Product
-	GET /get_item_page/:id - Получение параметров товара по его id в виде entity.Product
-	POST /fav_items/:id - Добавление товара в избранное
-	DELETE /fav_items/:id - Удаление товара из избранного
+	GET /cart - Get a list of products in the cart as an array of entity.Product.
+	POST /cart/add/:id - Add product to cart.
+	DELETE /cart/remove/:id - Remove product from cart.
 
-	GET /cart - Получение списка товаров в корзине в виде массива entity.Product
-	POST /cart/add/:id - Добавление товара в корзину
-	DELETE /cart/remove/:id - Удаление товара из корзины
+	POST /search_item/name - Request -> json:"product_name" Response -> array of entity.Product.
 
-	POST /serch_item/name - Request -> json:"product_name" Response -> массив entity.Product
+Administrative functions
 
+	POST /createnewproduct - Create a new product (without admin logic). Request -> entity.Product.
 
-Административные функции
+	POST /editproductname/:id - Edit product name (without admin logic). Request -> `json:"product_name"`
+	POST /editproductprice/:id - Edit product price (without admin logic). Request -> int `json:"product_price"`
+	POST /editproductdescription/:id - Edit product description (without admin logic). Request -> `json:"product_description"`
+	POST /editproductcategory/:id - Edit product category (without admin logic). Request -> `json:"product_category"`
+	POST /editproductquantity/:id - Edit product quantity (without admin logic). Request -> int `json:"product_quantity"`
+	POST /editproductstockquantity/:id - Edit product stock quantity (without admin logic). Request -> int `json:"product_stock_quantity"`
+	POST /deleteproduct/:id - Delete product (without admin logic).
 
-    POST /createnewproduct - создание нового продукта(без логики администратора) Request -> entity.Product
+	POST /add_features_to_item/:id_item/:id_features - Add a feature (parameter) with id = id_features to the item by id_item (all of them can be viewed in the database, we need to discuss how to add them to the user on the frontend). Each parameter has a value that needs to be passed. Request -> 'json:"message"'
 
-    POST /editproductname/:id - редактирование имени продукта(без логики администратора) Request -> `json:"product_name"`
-    POST /editproductprice/:id - редактирование цены продукта(без логики администратора) Request -> int `json:"product_price"`
-    POST /editproductdescription/:id - редактирование описания продукта(без логики администратора) Request -> `json:"product_description"`
-    POST /editproductcategory/:id - редактирование категории продукта(без логики администратора) Request -> `json:"product_category"`
-    POST /editproductquantity/:id - редактирование колличества продукта(без логики администратора) Request -> int `json:"product_quantity"`
-    POST /editproductstockquantity/:id - редактирование продукта(без логики администратора) Request -> int `json:"product_stock_quantity"`
-    POST /deleteproduct/:id - удаление продукта(без логики администратора)
+	POST /updateimageforproduct/:id Add/update product photo. Request -> `json:"user_avatar"` format jpeg 60KB.
 
-    POST /add_features_to_item/:id_item/:id_features - к предмету по id_item добавить фичу(параметр) c id = id_features(их все можно в бд посмотреть, надо обсудить как на фронте их добавлять пользователю). У каждого параметра есть значение которое нужно передать Request -> 'json:"message"'
-
-	POST /updateimageforproduct/:id Добавление/обновление фото продукта Request -> `json:"user_avatar"` формат jpeg 60Кб
-
-
-### Используемые сущности
+### Used entities
 
 # User
-```bash
+```go
 type User struct {
 	gorm.Model
 	ID          uint    `json:"user_id"`
 	Balance     float64 `json:"user_balance"`
-	UserName    string  `json:"user_name"
+	UserName    string  `json:"user_name"`
 	UserSurname string  `json:"user_surname"`
 	Login       string  `json:"user_login"`
 	Email       string  `json:"user_email"`
@@ -164,7 +161,7 @@ type User struct {
 }
 ```
 # FilterParams
-```bash
+```go
 type FilterParams struct {
 	Category string  `json:"category"`
 	MinPrice float64 `json:"minPrice"`
@@ -172,7 +169,7 @@ type FilterParams struct {
 }
 ```
 # Product
-```bash
+```go
 type Product struct {
 	ProductID     uint    `json:"product_id"`
 	Price         float64 `json:"product_price"`
@@ -188,7 +185,7 @@ type Product struct {
 }
 ```
 # Feature
-```bash
+```go
 type Feature struct {
 	Name                string `json:"name_of_feature"`
 	Value               string `json:"value_for_feature"`
@@ -196,7 +193,7 @@ type Feature struct {
 }
 ```
 # CartItem
-```bash
+```go
 type CartItem struct {
 	ProductID_cart uint    `json:"product_id"`
 	Quantity       int     `json:"quantity"`
@@ -204,13 +201,13 @@ type CartItem struct {
 }
 ```
 # Cart
-```bash
+```go
 type Cart struct {
 	Items []CartItem `json:"items"`
 }
 ```
-# Favourite
-```bash
+# Favorite
+```go
 type Favorite struct {
 	gorm.Model
 	ProductID      uint    `json:"product_id"`
@@ -227,7 +224,7 @@ type Favorite struct {
 ```
 
 # Order
-```bash
+```go
 type Order struct {
 	gorm.Model
 	UserID uint   `gorm:"not null" json:"user_id"`

@@ -1,63 +1,52 @@
-# Фронт составляющая проекта
+# ITAM Shop Frontend Application
 
-## IDE requrements
+## Project Overview
 
--   Prettier plugin
--   Esling plugin
+The ITAM Shop frontend application is a modern web-based interface for managing an e-commerce shop. It provides users with a seamless experience to browse, purchase, and manage modern clothing items from all over the world.
 
-## Команды работы с проектом
+## Technologies Used
 
-`npm run...`:
-1. `... dev` - запускает локальный сервер
-2. `... lint` - проверяет проект линтерами
-3. `... lint:format` - линтером приводит формат проекта к одному стилю
-4. `... lint:auto-fix` - линтер фиксит все прболемы, что могут быть пофикшены автоматически
-5. `... build` - собирает проект в директории `dist/**/*`
+- **React**: A JavaScript library for building user interfaces.
+- **Redux Toolkit**: State management for React applications.
+- **RTK Query**: Data fetching framework.
+- **Feature Sliced Design**: Frontend methodology for organizing source code.
+- **React Router**: Declarative routing for React applications.
+- **Next UI**: UI framework.
+- **ESLint + Prettier**: Team development features (linter + code formatter).
+- **Docker**: Containerization platform.
 
-## Гайд как пользоваться фронтом проекта
-### Getting started
-1. Перейти в директорию frontend/
-2. запустить несколько следующих команд, они нужны, чтобы базово вести разработку
-```bash
-<!-- установка всех зависимостей -->
-npm i 
+## Getting Started
 
-<!-- когда надо запутстить проект -->
-npm run dev
-```
+### Prerequisites
 
-### Linters
-#### В общем
-У нас есть линтеры, которые следят за качеством кода
+- Node.js (v14.x or higher)
+- Docker (for containerization)
 
-Чтобы запустить проверку проекта на соблюдение всех правил запусти команду:
-```
-npm run lint
-```
+### Installation
 
-она покажет что не так и что следует поправить
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/yourusername/ITAM_shop.git
+    cd ITAM_shop/frontend
+    ```
 
-#### Способы облегчить свою жизнь
-1. Установить плагин ESLint, который подсвечивает все ошибки сразу в твоей IDE
-2. Установить плагин prettier, который форматирует код, убирает лишние пробелы и приводит к правильному стилю
+2. **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-Для работы плагинов надо покапаться в настройке и там поставить галочки на "enable ESLint, enable Prettier, prettier requires config" - без них плагины будут работать неккоректно
-> После таких манипуляций рекомендую перезагружать страницу ide, чтобы все работало корректно
+3. **Run the application**:
+    ```bash
+    npm run dev
+    ```
+
+## Project Structure
+- `src/`: Source code of the application.
+- `public/`: Public assets and static files.
+- `Dockerfile`: Docker configuration for the frontend application.
+- `package.json`: Project metadata and dependencies.
 
 
-#### Магия линтеров
-запустив команду 
-```bash
-npm run lint:format 
-```
+## Contact
 
-проект отформатирует весь проект сам, а команда
-```bash
-npm run lint:auto-fix
-```
-
-пофиксит все проблемы линтеров, что могут быть пофикшены автоматически
-
-### Как пользоваться всем
-Наша работа выглядит так:
-- Пишешь код, следуя правилам линтера, форматируешь свой код с помощью плагина prettier, а перед тем как запушить изменения в репозиторий запускаешь все команды из блока выше (проверку на ошибки, автоформатирование кодая - эти две)
+If you have any questions or suggestions, please feel free to contact us at [support@itamshop.com](mailto:support@itamshop.com).
