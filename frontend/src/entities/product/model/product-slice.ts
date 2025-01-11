@@ -15,6 +15,8 @@ const initStateValue: ProductState = {
             product_name: "",
             product_price: 0,
             product_stock_quantity: 0,
+            is_in_cart: 0,
+            is_in_fav: 0,
         },
     ],
 }

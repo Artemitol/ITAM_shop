@@ -39,7 +39,7 @@ export function ProductCard() {
 
     return (
         <div className={classes.productCard}>
-            <Image path={product.product_image} />
+            <Image path={product.product_image || ""} />
             <div className={classes.info}>
                 <TextInfo
                     name={product.product_name}
